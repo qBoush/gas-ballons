@@ -4,7 +4,7 @@
 <template>
   <div class="footer">
     <div class="footer-top">
-      <router-link to="Home"><img src="../images/footer/logo-footer.png" height="38" width="190"/></router-link>
+      <img src="../images/footer/logo-footer.png" height="38" width="190"/>
       <a href="#">О компании</a>
       <a href="#">Каталог</a>
       <a href="#">Оптовикам</a>
