@@ -1,19 +1,22 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import productData from '../data/data.json'; // Импорт ваших данных
+import db from '../data/data-services.json';
 
-const cards = ref([]);
+const sales = ref([]);
+const services = ref([]);
 const isLoading = ref(true);
 
 const images = import.meta.glob('../images/**/*.{png,jpg,jpeg,svg}', { eager: true });
 
 const getImageUrl = (path) => {
-  const fullPath = `../images/${path}`;
-  return images[fullPath]?.default || '';
+  const key = Object.keys(images).find(k => k.includes(path));
+  return images[key]?.default || '';
 };
 
 onMounted(() => {
-  cards.value = productData; // Присваиваем массив из 4 элементов
+  sales.value = db.sales;
+  services.value = db.services;
+
   isLoading.value = false;
 });
 </script>
@@ -193,6 +196,105 @@ onMounted(() => {
       </div>
     </div>
   </section>
+  <section class="advantages">
+    <h1>
+      Преимущества работы с нами
+    </h1>
+    <div class="advantage-items">
+      <div class="advantage-item">
+        <div class="advantage-item-left">
+          <img src="../images/Home/section-advantages/item-1.svg" height="50" width="50">
+        </div>
+        <div class="advantage-item-right">
+          <h3>
+            Более 1000 товаров
+          </h3>
+          <p>
+            Все для комплектации и сборки<br> автономной газовой системы
+          </p>
+        </div>
+      </div>
+      <div class="advantage-item">
+        <div class="advantage-item-left">
+          <img src="../images/Home/section-advantages/item-2.png" height="50" width="50">
+        </div>
+        <div class="advantage-item-right">
+          <h3>
+            Собственные разработки
+          </h3>
+          <p>
+            Производственная линия и<br> испытательная лаборатория в Чехии.
+          </p>
+        </div>
+      </div>
+      <div class="advantage-item">
+        <div class="advantage-item-left">
+          <img src="../images/Home/section-advantages/item-3.svg" height="50" width="50">
+        </div>
+        <div class="advantage-item-right">
+          <h3>
+            На связи 24х7
+          </h3>
+          <p>
+            Консультации и помощь в подборе<br> оборудования, сборке газовых систем.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="advantage-items">
+      <div class="advantage-item">
+        <div class="advantage-item-left">
+          <img src="../images/Home/section-advantages/item-4.png" height="50" width="50">
+        </div>
+        <div class="advantage-item-right">
+          <h3>
+            Срочная доставка
+          </h3>
+          <p>
+            Срочная доставка от 3 часов<br>по Москве и Московской области
+          </p>
+        </div>
+      </div>
+      <div class="advantage-item">
+        <div class="advantage-item-left">
+          <img src="../images/Home/section-advantages/item-5.png" height="50" width="50">
+        </div>
+        <div class="advantage-item-right">
+          <h3>
+            Доставка по России
+          </h3>
+          <p>
+            4-5 дней — среднее время выполнения<br> заказа от обращения до вручения.
+          </p>
+        </div>
+      </div>
+      <div class="advantage-item">
+        <div class="advantage-item-left">
+          <img src="../images/Home/section-advantages/item-6.png" height="50" width="50">
+        </div>
+        <div class="advantage-item-right">
+          <h3>
+            Поддержка клиентов
+          </h3>
+          <p>
+            Поддержка по вопросам, связанным<br>с газом и газовым оборудованием.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="advantage-services-cards">
+      <div v-for="item in services" :key="item.id" class="service-card">
+        <img :src="getImageUrl(item.image)" class="card-image" height="169" width="370">
+        <div class="card-content">
+          <h3>{{ item.title }}</h3>
+          <ul>
+            <li v-for="(point, index) in item.list" :key="index">{{ point }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </template>
 
 <style scoped>
@@ -398,6 +500,9 @@ onMounted(() => {
   border-color: #012D5A;
 }
 
+.item-category {
+  padding-bottom: 70px;
+}
 .item-category h2 {
   font-size: 28px;
   text-align: center;
@@ -444,5 +549,81 @@ onMounted(() => {
 }
 .item-card-title h1 {
   font-size: 20px;
+}
+.advantages h1 {
+  transform: translateX(-380px);
+  text-align: center;
+  font-size: 28px;
+  padding-bottom: 59px;
+}
+
+.advantage-items {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+.advantage-item {
+  display: flex;
+  height: 76px;
+  width: 368px;
+  margin: 0;
+}
+.advantage-item-left {
+  background: #F5FCFF;
+  height: 76px;
+  width: 76px;
+  margin: 0;
+}
+.advantage-item-left img {
+  padding: 13px 13px;
+}
+
+.advantage-item-right {
+  margin: 0;
+  padding: 5px 0 0 30px;
+}
+.advantage-item-right h3 {
+  font-size: 20px;
+  padding-bottom: 12px;
+}
+.advantage-item-right p {
+  font-size: 14px;
+}
+.advantage-services-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1200px;
+}
+.service-card {
+  width: 370px;
+  height: 447px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  background: #fff;
+  margin: 0;
+  margin-top:30px;
+}
+
+.card-content {
+}
+
+.card-content h3 {
+  font-size: 20px;
+  padding-bottom: 30px;
+  padding-left: 22px;
+}
+
+.card-content ul {
+  padding-left: 40px;
+  padding-right: 23px;
+}
+
+.card-content li {
+  font-size: 14px;
+  padding-bottom: 20px;
+  color: #333;
 }
 </style>
