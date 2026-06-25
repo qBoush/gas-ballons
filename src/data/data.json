@@ -1,0 +1,6 @@
+[
+  { "id": 1, "image": "Home/section-sales/card_image.png", "title": "Автоматический регулятор SRG", "rating": 4.6, "reviews": 1, "price": "5 175", "isFavorite": false, "isTune": false },
+  { "id": 2, "image": "Home/section-sales/card_image.png", "title": "Автоматический регулятор SRG", "rating": 4.6, "reviews": 1, "price": "5 175", "isFavorite": false, "isTune": false },
+  { "id": 3, "image": "Home/section-sales/card_image.png", "title": "Автоматический регулятор SRG", "rating": 4.6, "reviews": 1, "price": "5 175", "isFavorite": false, "isTune": false },
+  { "id": 4, "image": "Home/section-sales/card_image.png", "title": "Автоматический регулятор SRG", "rating": 4.6, "reviews": 1, "price": "5 175", "isFavorite": false, "isTune": false }
+]

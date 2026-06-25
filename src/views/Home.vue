@@ -1,15 +1,21 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import productData from '../data/data.json'; // Импорт ваших данных
 
+const cards = ref([]);
+const isLoading = ref(true);
 
-const cards = ref([
-  { id: 1, isFavorite: false, isTune: false },
-  { id: 2, isFavorite: false, isTune: false },
-  { id: 3, isFavorite: false, isTune: false },
-  { id: 4, isFavorite: false, isTune: false },
-]);
+const images = import.meta.glob('../images/**/*.{png,jpg,jpeg,svg}', { eager: true });
 
+const getImageUrl = (path) => {
+  const fullPath = `../images/${path}`;
+  return images[fullPath]?.default || '';
+};
 
+onMounted(() => {
+  cards.value = productData; // Присваиваем массив из 4 элементов
+  isLoading.value = false;
+});
 </script>
 
 <template>
@@ -30,7 +36,10 @@ const cards = ref([
 </section>
   <section class="sales">
     <h2>Хиты продаж</h2>
-    <div class="sales-cards">
+
+    <div v-if="isLoading">Загрузка товаров...</div>
+
+    <div v-else class="sales-cards">
       <div v-for="card in cards" :key="card.id" class="sales-card">
         <div class="sales-card-image-wrapper">
           <div class="sales-card-discount">Скидка 10%</div>
@@ -46,21 +55,27 @@ const cards = ref([
                 @click="card.isTune = !card.isTune">
             </button>
           </div>
-          <img class="sales-card-img" src="../images/Home/section-sales/card_image.png"/>
+          <img class="sales-card-img" :src="getImageUrl(card.image)"/>
         </div>
+
         <div class="sales-card-info">
-          <h3 class="sales-card-title">Автоматически<br> переключаемый<br> регулятор SRG</h3>
+          <h3 class="sales-card-title">{{ card.title }}</h3>
+
           <div class="sales-card-rating">
             <img src="../images/Home/section-sales/star.png" height="16" width="16"/>
-            <span class="rating-score">4,6</span>
-            <a href="#" class="rating-reviews">1 отзыв</a>
+            <span class="rating-score">{{ card.rating }}</span>
+            <a href="#" class="rating-reviews">{{ card.reviews }} отзыв</a>
           </div>
-          <div class="sales-card-price">5 175р.</div>
-            <button class="btn-buy">Купить в один клик</button>
-            <button class="btn-card">В корзину</button>
-          </div>
+
+          <div class="sales-card-price">{{ card.price }} р.</div>
+
+          <button class="btn-buy">Купить в один клик</button>
+          <button class="btn-card">В корзину</button>
         </div>
       </div>
+
+
+    </div>
   </section>
   <section class="slider">
     <div class="slider-container">
