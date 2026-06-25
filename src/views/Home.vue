@@ -1,20 +1,25 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import db from '../data/data-services.json';
+import db from '../data/data.json';
 
 const sales = ref([]);
+const newItems = ref([]);
 const services = ref([]);
 const isLoading = ref(true);
 
-const images = import.meta.glob('../images/**/*.{png,jpg,jpeg,svg}', { eager: true });
+const images = import.meta.glob(
+    '../images/**/*.{png,jpg,jpeg,svg}',
+    { eager: true }
+);
 
 const getImageUrl = (path) => {
-  const key = Object.keys(images).find(k => k.includes(path));
+  const key = Object.keys(images).find((k) => k.includes(path));
   return images[key]?.default || '';
 };
 
 onMounted(() => {
   sales.value = db.sales;
+  newItems.value = db.newItems;
   services.value = db.services;
 
   isLoading.value = false;
@@ -43,7 +48,7 @@ onMounted(() => {
     <div v-if="isLoading">Загрузка товаров...</div>
 
     <div v-else class="sales-cards">
-      <div v-for="card in cards" :key="card.id" class="sales-card">
+      <div v-for="card in sales" :key="card.id" class="sales-card">
         <div class="sales-card-image-wrapper">
           <div class="sales-card-discount">Скидка 10%</div>
           <div class="sales-card-actions">
@@ -294,7 +299,92 @@ onMounted(() => {
       </div>
     </div>
   </section>
+  <section class="help">
+    <div class="help-window">
+      <div class="help-title">
+        <h1>
+          Нужна помощь в подборе оборудования?
+        </h1>
+        <p>
+          Запишитесь на консультацию. Наш специалист перезвонит вам.
+        </p>
+      </div>
+      <div class="help-inputs">
+        <input class="help-name" placeholder="Ваше имя">
+        <input class="help-number" placeholder="Номер телефона">
+        <button class="help-button">Записаться</button>
+      </div>
+      <div class="help-description">
+        <p>
+          Нажимая на кнопку «Записаться» вы соглашаетесь на обработку персональных данных,<br> получение sms и email с предложениями о новых акциях нашей компании.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="new-items">
+    <h2>Новинки</h2>
 
+    <div v-if="isLoading">Загрузка...</div>
+
+    <div v-else class="sales-cards">
+      <div v-for="card in newItems" :key="card.id" class="sales-card">
+        <div class="sales-card-image-wrapper">
+          <div class="sales-card-discount">
+            Скидка 10%
+          </div>
+          <div class="sales-card-actions">
+            <button
+                class="action-btn-favorite"
+                :class="{ active: card.isFavorite }"
+                @click="card.isFavorite = !card.isFavorite"
+            ></button>
+
+            <button
+                class="action-btn-tune"
+                :class="{ active: card.isTune }"
+                @click="card.isTune = !card.isTune"
+            ></button>
+          </div>
+
+          <img
+              class="sales-card-img"
+              :src="getImageUrl(card.image)"
+          />
+        </div>
+
+        <div class="sales-card-info">
+          <h3 class="sales-card-title">
+            {{ card.title }}
+          </h3>
+
+          <div class="sales-card-rating">
+            <img
+                src="../images/Home/section-sales/star.png"
+                height="16"
+                width="16"
+            />
+
+            <span class="rating-score">
+            {{ card.rating }}
+          </span>
+
+          </div>
+
+          <div class="sales-card-price">
+            {{ card.price }} р.
+          </div>
+
+          <button class="btn-buy">
+            Купить в один клик
+          </button>
+
+          <button class="btn-card">
+            В корзину
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped>
@@ -349,6 +439,7 @@ onMounted(() => {
   gap: 30px;
   justify-content: center;
   padding-bottom: 80px;
+  padding-top: 30px;
 }
 .sales-card {
   width: 270px;
@@ -625,5 +716,77 @@ onMounted(() => {
   font-size: 14px;
   padding-bottom: 20px;
   color: #333;
+}
+.help {
+  padding-top: 50px;
+}
+.help-window {
+  height: 274px;
+  width: 1170px;
+  background-image: url('../images/Home/section-help/help-bg.png');
+}
+.help-title h1 {
+  color: white;
+  font-size: 28px;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 18px;
+}
+.help-title p {
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  padding-bottom: 40px;
+}
+.help-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+.help-inputs input {
+  margin: 0;
+}
+.help-name {
+  height: 48px;
+  width: 270px;
+  border-radius: 34px;
+  border: none;
+  padding-left: 30px;
+  color: #A6B0B9;
+  font-size: 16px;
+}
+.help-number {
+  height: 48px;
+  width: 440px;
+  border-radius: 34px;
+  border: none;
+  padding-left: 30px;
+  color: #A6B0B9;
+  font-size: 16px;
+
+}
+.help-inputs button {
+  margin: 0;
+  height: 48px;
+  width: 200px;
+  border-radius: 34px;
+  border: none;
+  background: #25A1D3;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+.help-description {
+  color: #A6B0B9;
+  font-size: 14px;
+  padding-left: 70px;
+  padding-top: 18px;
+}
+.new-items h2 {
+  font-size: 28px;
+  text-align: center;
+  transform: translateX(-528px);
+  margin: 0;
+  padding-top: 86px;
 }
 </style>
