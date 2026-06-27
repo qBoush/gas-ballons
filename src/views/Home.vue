@@ -5,6 +5,8 @@ import db from '../data/data.json';
 const sales = ref([]);
 const newItems = ref([]);
 const services = ref([]);
+const reviews = ref([]);
+const articles = ref(db.articles);
 const isLoading = ref(true);
 
 const images = import.meta.glob(
@@ -21,27 +23,28 @@ onMounted(() => {
   sales.value = db.sales;
   newItems.value = db.newItems;
   services.value = db.services;
-
+  reviews.value = db.reviews;
+  articles.value = db.articles;
   isLoading.value = false;
 });
 </script>
 
 <template>
-<section class="slider">
-  <div class="slider-container">
-    <img class="slider-left" src="../images/Home/button-slider.png"/>
-    <img src="../images/Home/slider.png" height="274" width="1170"/>
-    <img class="slider-right" src="../images/Home/button-slider.png"/>
-  </div>
-  <div class="slider-progress">
-    <img src="../images/Home/active-slide.png" height="5" width="5"/>
-    <img src="../images/Home/slide.png" height="5" width="5"/>
-    <img src="../images/Home/slide.png" height="5" width="5"/>
-    <img src="../images/Home/slide.png" height="5" width="5"/>
-    <img src="../images/Home/slide.png" height="5" width="5"/>
-    <img src="../images/Home/slide.png" height="5" width="5"/>
-  </div>
-</section>
+  <section class="slider">
+    <div class="slider-container">
+      <img class="slider-left" src="../images/Home/button-slider.png"/>
+      <img src="../images/Home/slider.png" height="274" width="1170"/>
+      <img class="slider-right" src="../images/Home/button-slider.png"/>
+    </div>
+    <div class="slider-progress">
+      <img src="../images/Home/active-slide.png" height="5" width="5"/>
+      <img src="../images/Home/slide.png" height="5" width="5"/>
+      <img src="../images/Home/slide.png" height="5" width="5"/>
+      <img src="../images/Home/slide.png" height="5" width="5"/>
+      <img src="../images/Home/slide.png" height="5" width="5"/>
+      <img src="../images/Home/slide.png" height="5" width="5"/>
+    </div>
+  </section>
   <section class="sales">
     <h2>Хиты продаж</h2>
 
@@ -333,55 +336,91 @@ onMounted(() => {
             Скидка 10%
           </div>
           <div class="sales-card-actions">
-            <button
-                class="action-btn-favorite"
-                :class="{ active: card.isFavorite }"
-                @click="card.isFavorite = !card.isFavorite"
-            ></button>
+            <button class="action-btn-favorite" :class="{ active: card.isFavorite }" @click="card.isFavorite = !card.isFavorite"></button>
 
-            <button
-                class="action-btn-tune"
-                :class="{ active: card.isTune }"
-                @click="card.isTune = !card.isTune"
-            ></button>
+            <button class="action-btn-tune" :class="{ active: card.isTune }" @click="card.isTune = !card.isTune"></button>
           </div>
 
-          <img
-              class="sales-card-img"
-              :src="getImageUrl(card.image)"
-          />
+          <img class="sales-card-img" :src="getImageUrl(card.image)"/>
         </div>
-
         <div class="sales-card-info">
           <h3 class="sales-card-title">
             {{ card.title }}
           </h3>
-
           <div class="sales-card-rating">
-            <img
-                src="../images/Home/section-sales/star.png"
-                height="16"
-                width="16"
-            />
-
+            <img src="../images/Home/section-sales/star.png" height="16" width="16"/>
             <span class="rating-score">
             {{ card.rating }}
           </span>
-
           </div>
-
           <div class="sales-card-price">
             {{ card.price }} р.
           </div>
-
           <button class="btn-buy">
             Купить в один клик
           </button>
-
           <button class="btn-card">
             В корзину
           </button>
         </div>
+      </div>
+    </div>
+  </section>
+  <section class="rating">
+    <h1>
+      Отзывы
+    </h1>
+    <div class="rating-cards">
+      <div v-for="item in reviews" :key="item.id" class="review-card">
+        <img :src="getImageUrl(item.image)" class="review-img" />
+        <div class="review-info">
+          <h3>{{ item.title }}</h3>
+          <p class="review-text">{{ item.text }}</p>
+          <div class="review-meta">
+            <img :src="getImageUrl(item.rating)" class="rating-img"/>
+            <span class="review-author">{{ item.author }}</span>
+            <span class="review-date">{{ item.date }}</span>
+          </div>
+          <a href="#" class="review-link">Читать все отзывы →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="articles-news">
+    <h1>Полезные статьи и новости</h1>
+    <div class="articles-cards">
+      <div v-for="item in articles" :key="item.id" class="articles-card">
+        <img :src="getImageUrl(item.image)" class="article-img" />
+        <div class="article-content">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+        </div>
+        <button class="article-btn">Читать</button>
+      </div>
+    </div>
+  </section>
+  <section class="first-news">
+    <div class="first-news-window">
+      <div class="first-news-top">
+        <div class="first-news-left">
+          <h1>
+            Получайте новости<br> об акциях первыми!
+          </h1>
+        </div>
+        <div class="first-news-center">
+          <input placeholder="Введите email">
+        </div>
+        <div class="first-news-right">
+          <button>
+            Подписаться
+          </button>
+        </div>
+      </div>
+      <div class="first-news-bottom">
+        <p>
+          Нажимая на кнопку «Подписаться» вы соглашаетесь на обработку персональных<br>
+          данных, получение email с предложениями о новых акциях нашей компании.
+        </p>
       </div>
     </div>
   </section>
@@ -506,13 +545,26 @@ onMounted(() => {
   transition: all 0.2s ease;
 }
 
-.action-btn-favorite { background-image: url('../images/Home/section-sales/favorite_border.png'); }
-.action-btn-favorite:hover { background-image: url('../images/Home/section-sales/favorite_hover.png'); }
-.action-btn-favorite.active { background-image: url('../images/Home/section-sales/favorite_selected.png'); border-color: #25A1D3; }
+.action-btn-favorite {
+  background-image: url('../images/Home/section-sales/favorite_border.png');
+}
+.action-btn-favorite:hover
+{
+  background-image: url('../images/Home/section-sales/favorite_hover.png');
+}
+.action-btn-favorite.active {
+  background-image: url('../images/Home/section-sales/favorite_selected.png'); border-color: #25A1D3;
+}
 
-.action-btn-tune { background-image: url('../images/Home/section-sales/tune.png'); }
-.action-btn-tune:hover { background-image: url('../images/Home/section-sales/tune_hover.png'); }
-.action-btn-tune.active { background-image: url('../images/Home/section-sales/tune_hover.png'); border-color: #25A1D3; }
+.action-btn-tune {
+  background-image: url('../images/Home/section-sales/tune.png');
+}
+.action-btn-tune:hover {
+  background-image: url('../images/Home/section-sales/tune_hover.png');
+}
+.action-btn-tune.active {
+  background-image: url('../images/Home/section-sales/tune_hover.png'); border-color: #25A1D3;
+}
 .sales-card-info {
   width: 230px;
 }
@@ -788,5 +840,230 @@ onMounted(() => {
   transform: translateX(-528px);
   margin: 0;
   padding-top: 86px;
+}
+
+.rating {
+  padding: 80px 0 70px 0;
+}
+
+.rating h1 {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+  transform: translateX(-528px);
+}
+
+.rating-cards {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.review-card {
+  width: 570px;
+  height: 277px;
+  display: flex;
+  background: #F5FCFF;
+  border-radius: 10px;
+  gap:  20px;
+  margin: 0;
+}
+
+.review-img {
+  width: 170px;
+  height: 169px;
+  padding-top: 52px;
+}
+
+.review-info {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-right: 35px;
+}
+
+.review-info h3 {
+  font-size: 16px;
+  color: #181818;
+  font-weight: bold;
+  padding-bottom: 18px;
+}
+
+.review-text {
+  font-size: 16px;
+  color: #181818;
+  padding-bottom: 18px;
+}
+
+.review-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  margin-top: auto;
+}
+
+.rating-img {
+  height: 16px;
+  width: 88px;
+  margin: 0;
+}
+
+.review-author {
+  font-size: 14px;
+  color: #181818;
+  margin: 0;
+}
+
+.review-date {
+  font-size: 14px;
+  color: #181818;
+  transform: translateX(-8px);
+  font-weight: bold;
+  margin: 0;
+}
+.review-link {
+  color: #25A1D3;
+  font-size: 16px;
+  text-decoration: none;
+  margin: 0;
+  font-weight: bold;
+  padding-top: 18px;
+  padding-bottom: 20px;
+
+}
+
+.articles-news {
+  padding: 80px 0;
+}
+
+.articles-news h1 {
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+  transform: translateX(-400px);
+}
+
+.articles-cards {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.articles-card {
+  width: 270px;
+  height: 410px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.article-img {
+  width: 270px;
+  height: 150px;
+  padding-bottom: 20px;
+}
+
+.article-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.article-content h3 {
+  font-size: 20px;
+  margin: 0;
+  padding-bottom: 20px;
+}
+
+.article-content p {
+  font-size: 14px;
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+.article-btn {
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 18px;
+  background-color: #25A1D3;
+  color: #fff;
+  border: none;
+  border-radius: 62px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.article-btn:hover {
+  background-color: #012D5A;
+}
+
+.first-news-window {
+  background: #012D5A;
+  height: 158px;
+  width: 1170px;
+  border-radius: 10px;
+  margin-bottom: 70px;
+}
+
+.first-news-top {
+  margin: 0;
+  display: flex;
+}
+.first-news-left {
+  margin: 0;
+}
+.first-news-left h1 {
+  font-size: 28px;
+  color: white;
+  padding-top: 40px;
+  padding-left: 70px;
+  width: 294px;
+}
+.first-news-center {
+  margin: 0;
+}
+.first-news-center input {
+  height: 48px;
+  width: 450px;
+  border-radius: 34px;
+  border: none;
+  padding-left: 20px;
+  color: #A6B0B9;
+  font-size: 16px;
+  margin-top: 44px;
+  margin-left: 36px;
+}
+
+.first-news-right {
+  margin: 0;
+}
+.first-news-right button {
+  width: 200px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  background-color: #25A1D3;
+  color: #fff;
+  border: none;
+  border-radius: 34px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 44px;
+  margin-left: 30px;
+}
+.first-news-right button:hover {
+  background-color: #012D5A;
+}
+
+.first-news-bottom p {
+  font-size: 14px;
+  color: #ffffffB3;
+  padding-left: 400px;
 }
 </style>
