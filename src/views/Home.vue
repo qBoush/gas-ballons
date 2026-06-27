@@ -1066,4 +1066,127 @@ onMounted(() => {
   color: #ffffffB3;
   padding-left: 400px;
 }
+@media (max-width: 768px) {
+  /* Базовый сброс для корректных отступов */
+  section, div { box-sizing: border-box; }
+
+  /* Сброс жестких сдвигов у заголовков */
+  .sales h2, .item-category h2, .advantages h1, .new-items h2, .rating h1, .articles-news h1 {
+    transform: none !important;
+    text-align: left !important;
+    padding-left: 15px;
+    font-size: 24px !important;
+  }
+
+  /* Слайдер */
+  .slider-container { padding: 15px !important; }
+  .slider-container img[width="1170"] { width: 100% !important; height: auto !important; }
+  .slider-left, .slider-right { display: none !important; }
+
+  /* Карточки товаров (Хиты и Новинки) - по 2 в ряд */
+  .sales-cards {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px !important;
+    padding: 15px !important;
+  }
+  .sales-card { width: 100% !important; height: auto !important; }
+  .sales-card-image-wrapper { width: 100% !important; height: auto !important; aspect-ratio: 1 / 1; }
+  .sales-card-img { width: 80% !important; height: 80% !important; padding-top: 0 !important; object-fit: contain; }
+  .sales-card-info { width: 100% !important; padding: 0 10px 10px 10px !important; box-sizing: border-box; }
+  .sales-card-title { font-size: 12px !important; min-height: 40px; padding-top: 10px !important; }
+  .sales-card-price { font-size: 16px !important; padding-bottom: 10px !important; }
+  .rating-reviews { display: none !important; } /* Скрываем отзывы на карточке как на скрине */
+  .btn-buy, .btn-card { padding: 10px 0 !important; font-size: 12px !important; }
+  .sales-card-discount,.sales-card-actions,.sales-card-rating
+  {
+    display: none !important;
+  }
+  .sales-cards .sales-card:nth-child(n+3) {
+    display: none !important;
+  }
+
+  /* Категории товаров - в колонку */
+  .items-category { flex-direction: column; padding: 10px 15px !important; gap: 10px !important; }
+  .item-card { width: 100% !important; }
+
+  /* Преимущества - в колонку */
+  .advantage-items { flex-direction: column; padding: 0 15px !important; gap: 15px !important; }
+  .advantage-item {
+    width: 100% !important;
+    height: auto !important; /* Разрешаем блоку расти по высоте */
+    min-height: 76px;
+    align-items: flex-start !important; /* Прижимаем иконку к верхнему краю */
+  }
+
+  /* Убираем лишние отступы внутри текста преимуществ */
+  .advantage-item-right {
+    padding-top: 0 !important;
+  }
+
+  /* Услуги / карточки сервиса */
+  .advantage-services-cards { flex-direction: column; padding: 0 15px !important; }
+  .service-card { width: 100% !important; height: auto !important; }
+  .service-card .card-image { width: 100% !important; height: auto !important; }
+  .service-card:nth-child(n+2) {
+    display: none !important;
+  }
+
+  /* Помощь в подборе (синий блок) */
+  .help-window {
+    width: 95% !important; /* Вместо 300px ставим 95%, чтобы блок не вылезал */
+    margin: 0 auto 20px auto !important; /* Центрируем и добавляем отступ снизу */
+    height: auto !important;
+    padding: 20px !important;
+    border-radius: 15px !important;
+    background-size: cover !important;
+    display: flex !important;
+    flex-direction: column !important;
+    position: relative !important;
+  }
+
+  .help-inputs {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    width: 100% !important;
+  }
+
+  .help-name, .help-number, .help-inputs button {
+    width: 230px !important;
+    max-width: none !important;
+  }
+
+  /* Отзывы */
+  .rating-cards { flex-direction: column; padding: 0 15px !important; }
+  .review-card {
+    width: 100% !important;
+    height: auto !important;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px !important;
+  }
+  .review-info { padding-right: 0 !important; }
+  .review-img { padding-top: 0 !important; }
+  .review-meta { flex-wrap: wrap; justify-content: center; }
+
+  /* Статьи */
+  .articles-cards { flex-direction: column; padding: 0 15px !important; }
+  .articles-card { width: 100% !important; height: auto !important; }
+  .article-img { width: 100% !important; height: auto !important; }
+
+  /* Рассылка (нижний блок) */
+  .first-news-window {
+    width: 100% !important;
+    height: auto !important;
+    padding: 30px 15px !important;
+    margin-bottom: 20px !important;
+  }
+  .first-news-top { flex-direction: column; align-items: stretch !important; gap: 15px;}
+  .first-news-left h1 { padding-left: 0 !important; padding-top: 0 !important; width: auto !important; text-align: center; font-size: 20px !important;}
+  .first-news-center input, .first-news-right button { width: 100% !important; margin: 0 !important; }
+  .first-news-bottom p { padding-left: 0 !important; text-align: center; padding-top: 20px !important;}
+}
+
 </style>
