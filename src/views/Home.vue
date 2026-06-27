@@ -1067,10 +1067,8 @@ onMounted(() => {
   padding-left: 400px;
 }
 @media (max-width: 768px) {
-  /* Базовый сброс для корректных отступов */
   section, div { box-sizing: border-box; }
 
-  /* Сброс жестких сдвигов у заголовков */
   .sales h2, .item-category h2, .advantages h1, .new-items h2, .rating h1, .articles-news h1 {
     transform: none !important;
     text-align: left !important;
@@ -1078,12 +1076,10 @@ onMounted(() => {
     font-size: 24px !important;
   }
 
-  /* Слайдер */
   .slider-container { padding: 15px !important; }
   .slider-container img[width="1170"] { width: 100% !important; height: auto !important; }
   .slider-left, .slider-right { display: none !important; }
 
-  /* Карточки товаров (Хиты и Новинки) - по 2 в ряд */
   .sales-cards {
     display: grid !important;
     grid-template-columns: 1fr 1fr;
@@ -1106,25 +1102,21 @@ onMounted(() => {
     display: none !important;
   }
 
-  /* Категории товаров - в колонку */
   .items-category { flex-direction: column; padding: 10px 15px !important; gap: 10px !important; }
   .item-card { width: 100% !important; }
 
-  /* Преимущества - в колонку */
   .advantage-items { flex-direction: column; padding: 0 15px !important; gap: 15px !important; }
   .advantage-item {
     width: 100% !important;
-    height: auto !important; /* Разрешаем блоку расти по высоте */
+    height: auto !important;
     min-height: 76px;
-    align-items: flex-start !important; /* Прижимаем иконку к верхнему краю */
+    align-items: flex-start !important;
   }
 
-  /* Убираем лишние отступы внутри текста преимуществ */
   .advantage-item-right {
     padding-top: 0 !important;
   }
 
-  /* Услуги / карточки сервиса */
   .advantage-services-cards { flex-direction: column; padding: 0 15px !important; }
   .service-card { width: 100% !important; height: auto !important; }
   .service-card .card-image { width: 100% !important; height: auto !important; }
@@ -1132,10 +1124,9 @@ onMounted(() => {
     display: none !important;
   }
 
-  /* Помощь в подборе (синий блок) */
   .help-window {
-    width: 95% !important; /* Вместо 300px ставим 95%, чтобы блок не вылезал */
-    margin: 0 auto 20px auto !important; /* Центрируем и добавляем отступ снизу */
+    width: 95% !important;
+    margin: 0 auto 20px auto !important;
     height: auto !important;
     padding: 20px !important;
     border-radius: 15px !important;
@@ -1157,7 +1148,6 @@ onMounted(() => {
     max-width: none !important;
   }
 
-  /* Отзывы */
   .rating-cards { flex-direction: column; padding: 0 15px !important; }
   .review-card {
     width: 100% !important;
@@ -1171,12 +1161,10 @@ onMounted(() => {
   .review-img { padding-top: 0 !important; }
   .review-meta { flex-wrap: wrap; justify-content: center; }
 
-  /* Статьи */
   .articles-cards { flex-direction: column; padding: 0 15px !important; }
   .articles-card { width: 100% !important; height: auto !important; }
   .article-img { width: 100% !important; height: auto !important; }
 
-  /* Рассылка (нижний блок) */
   .first-news-window {
     width: 100% !important;
     height: auto !important;
